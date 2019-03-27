@@ -1,0 +1,19 @@
+.game-logo{
+    display: inline-block;
+    width: 20%;
+    vertical-align: top;
+}
+.game-description{
+    display: inline-block;
+    width: 54%;
+    vertical-align: top;
+}
+.game-scores{
+    display: inline-block;
+    width: 25%;
+    vertical-align: top;
+}
+h4{
+    font-style: italic;
+    text-decoration: underline;
+}

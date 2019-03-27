@@ -1,0 +1,31 @@
+<div>
+    / <a [routerLink]="['/game_list']">Back to Game List</a> / 
+    <a [routerLink]="['/game_level_list/', game[0]._id]">Back to Game Level List</a> /
+    <span>Game Board</span>
+</div>
+
+<div class="game-board-header">
+  <div class="group-name"> <b>Game</b>: {{game[0].name}}</div>
+  <div class="game-button"> <button class="waves-effect waves-light btn" (click)="start_playing()">Start</button> </div>
+</div>
+
+<div class="game-board-screen">
+  {{ type_content }}
+</div>
+
+<textarea cols="30" rows="150" spellcheck="false" *ngIf="display_textbox" 
+  (keydown)="checkTypeValue($event)">
+</textarea>
+
+<div class="group-name"> <b>Group</b>: {{game_detail.name}} ({{game_detail.group_memeber.length}})</div>
+
+<div class="players-list" *ngFor="let players of game_detail.group_memeber">
+  <div class="game-board-player">{{players.name}}: </div>
+  <div class="game-board-bar-container"> 
+    <div class="game-board-bar" id="{{players.name}}">{{complition}}</div> 
+  </div>
+</div>
+
+<div style="padding-top: 20px;">
+  <button class="waves-effect waves-light btn">Join the Race</button>
+</div>

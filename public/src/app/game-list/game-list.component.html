@@ -1,0 +1,18 @@
+<div *ngFor="let game of games">
+  <div class="game-logo">    
+    <img (click)="getGameLevelList(game._id)" src="./../../assets/images/typing-game.png" 
+    alt="Typeing Game" style="width: 200px; height: auto;">
+  </div>
+  <div class="game-description">
+      <h4> {{game.name}} </h4>
+      <p> {{game.description}} </p>
+  </div>
+  <div class="game-scores">
+    <!-- <h4> Top 3 Scorers </h4>
+    <ol>
+      <li>MEAN Stack ( 5 minitus )</li>
+      <li>MEAN Stack ( 4 minitus )</li>
+      <li>MEAN Stack ( 3 minitus )</li>
+    </ol>     -->
+  </div>
+</div>

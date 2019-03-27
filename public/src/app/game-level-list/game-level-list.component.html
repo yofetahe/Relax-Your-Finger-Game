@@ -1,0 +1,75 @@
+<div>
+    / <a [routerLink]="['/game_list']">Back to Game List</a> / <span> Game Level List </span>
+</div>
+
+<h4> {{game[0].name}} </h4>
+
+<div class="game-level" *ngFor="let game_level of game[0].level; let level_index = index">
+
+  <div class="tab-container">
+    <div class="tab-button">
+      {{game_level.name}}
+    </div>
+    <div id="myBtn" (click)="createGroupForm()" class="create-group">
+      Create Group
+    </div>
+  </div>
+
+  <div class="group-container">
+
+    <div class="game-group" *ngFor="let group of game_level.created_group; let group_index = index">
+      <img src="./../../assets/images/group-sign.png" alt="" (click)="getGameBoard(level_index, group_index)">
+      <h6>{{group.name}} ( {{game_level.created_group[group_index].group_memeber.length}} )</h6>
+      <p>Competition Start: {{group.shedule_time}}</p>
+      <a *ngIf="display_links" (click)="joinGroupForm(level_index, group_index)" style="cursor: pointer;">&gt; Join Group &lt;</a>
+    </div>    
+    
+  </div>
+
+</div>
+
+<div id="create-group" class="modal">
+
+      <!-- Modal content -->
+      <div class="modal-content">
+        <span (click)="closeCreateForm()" class="close">&times;</span>
+        <h4>Invite others to compete with you.</h4>
+        <div class="login-bar">  
+            <div class="login-form">
+              <form method="POST">
+                <div class="errorMessage">{{error}}</div>    
+                <label for="">Group Name:</label>
+                <input type="text" [(ngModel)]="game_group.name" name="game_group.name" >
+                <label for="">Schedule for:</label>
+                <input type="text" [(ngModel)]="game_group.schedule" name="game_group.schedule" >
+                  
+                <button class="waves-effect waves-light btn" (click)="createGroupPerLevel()">Create</button> 
+              </form>  
+            </div>  
+          </div>
+      </div>
+    
+</div>
+
+<div id="join-group" class="modal">
+
+    <!-- Modal content -->
+    <div class="modal-content">
+      <span (click)="closeJoinForm()" class="close">&times;</span>
+      <h4>Join us and relax your finger.</h4>
+      <div class="login-bar">  
+          <div class="login-form">
+            <form method="POST">
+              <div class="errorMessage">{{error}}</div>    
+              <label for="">Group Name:</label>
+              <input type="text" [(ngModel)]="group_member.name" name="group_member.name" readonly>
+              <label for="">Schedule for:</label>
+              <input type="text" [(ngModel)]="group_member.email" name="group_member.email" readonly>
+                
+              <button class="waves-effect waves-light btn" (click)="joinGroup()">Join</button> 
+            </form>  
+          </div>  
+        </div>
+    </div>
+  
+</div>

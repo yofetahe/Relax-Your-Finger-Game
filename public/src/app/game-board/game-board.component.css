@@ -1,0 +1,47 @@
+span{
+    color: silver;
+}
+.game-board-screen{
+    background-color: slategrey;
+    min-height: 160px;
+    width: 100%;
+    margin-bottom: 10px;
+    color: white;
+    font-size: 16px;
+    padding: 20px;
+}
+
+.game-board-header{
+    padding: 15px 0px;
+}
+.group-name{    
+    display: inline-block;
+    width: 40%;
+}
+.game-button{
+    display: inline-block;
+    width: 59%;
+    text-align: right;
+}
+
+.players-list{
+    padding-top: 10px;
+}
+.game-board-player{
+    display: inline-block;
+    width: 15%;
+}
+.game-board-bar-container{
+    display: inline-block;
+    height: 20px;
+    width: 84%;
+    border: 1px solid green;
+}
+
+.game-board-bar{
+    background-color: green;
+    width: 0%;
+    height: 18px;
+    color: white;
+    text-align: right;
+}

@@ -1,0 +1,15 @@
+<nav>
+  <div class="container">
+    <div class="nav-wrapper">
+      <a href="#" class="brand-logo">Test Your Finger</a>
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+
+        <li *ngIf="inactive_user"><a [routerLink]="['/login']">Login</a></li>
+        <li *ngIf="inactive_user"><a [routerLink]="['/registration']">Register</a></li>
+        <li *ngIf="active_user"><a href="#">Login: {{current_user}}</a></li>
+        <li *ngIf="active_user"><a (click)="logout()">Logout</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+  

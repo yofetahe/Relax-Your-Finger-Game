@@ -1,0 +1,14 @@
+<div class="login-bar">  
+  <div class="login-form">
+    <form method="POST">
+      <div class="errorMessage">{{error}}</div>    
+      <label for="">email:</label>
+      <input type="text" [(ngModel)]="user.email" name="user.email" >
+      <label for="">Password:</label>
+      <input type="password" [(ngModel)]="user.password" name="user.password" >
+        
+      <button class="waves-effect waves-light btn" (click)="login()">Login</button> &nbsp;
+      <button class="waves-effect waves-light btn" [routerLink]="['/registration']">Register</button>
+    </form>  
+  </div>  
+</div>

@@ -1,0 +1,16 @@
+.login-bar{
+      
+    padding-top: 30px;
+    padding-bottom: 30px;
+    margin: 0 auto;
+}
+.login-form{
+    width: 50%;
+    margin: 0 auto;
+}
+.page-logo{    
+    top: 35%;    
+    display: inline-block;
+    width: 30%;
+    margin: 0 auto;
+}
