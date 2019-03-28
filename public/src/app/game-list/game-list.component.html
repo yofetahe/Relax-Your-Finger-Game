@@ -1,10 +1,17 @@
-<div *ngFor="let game of games">
-  <div class="game-logo">    
-    <img (click)="getGameLevelList(game._id)" src="./../../assets/images/typing-game.png" 
-    alt="Typeing Game" style="width: 200px; height: auto;">
+<div *ngFor="let game of games; let even = even; let odd = odd">
+  <div class="game-logo"> 
+
+    <img *ngIf="even" (click)="getGameLevelList(game._id)" 
+      src="./../../assets/images/typing-game.png" 
+      alt="Typeing Game" style="width: 150px; height: auto;">
+
+    <img *ngIf="odd" (click)="getGameLevelList(game._id)" 
+      src="./../../assets/images/finger_sup.jpg" 
+      alt="Typeing Game" style="width: 150px; height: auto;">
+
   </div>
   <div class="game-description">
-      <h4> {{game.name}} </h4>
+      <h4> {{game.name}} {{i}} </h4>
       <p> {{game.description}} </p>
   </div>
   <div class="game-scores">

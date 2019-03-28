@@ -41,7 +41,8 @@ module.exports = {
         name: "Bubble Up",
         description: "This game is a typing speed. All the players will have a typing speed bar indicating their performance in percentage. The one who hit 100% win the game. And the others will keep typing till they reach 100%. Enjoy!!!"
       }).then(data => {
-        console.log(data)
+        console.log(data);
+        res.json(data);
     });
   },
 
@@ -55,11 +56,15 @@ module.exports = {
           'name': 'LEVEL 1'
         }  
       }           
-    }).then(data => console.log(data));
+    }).then(data => {
+      console.log(data);
+      res.json(data);
+    });
   },
 
-  createGroupPerLevel: (req, res) => {    
-    //////////////// ADDING THE GROUP /////////////////
+  createGroupPerLevel: (req, res) => {
+    
+    ////////////// ADDING THE GROUP /////////////////
     const ID = req.params.id;
     Game.updateOne({_id: ID},
       {$push: 
@@ -71,18 +76,19 @@ module.exports = {
         }           
       }).then(data => {        
         
-        Game.updateOne({_id: "5c9ada9d70712d2414b76064"}, 
+        Game.updateOne({_id: ID}, 
           {$push: 
             {'level.0.created_group.0.group_memeber': [{
-              'name': sessionStorage.getItem('name'), 
-              'email': sessionStorage.getItem('email')
+              'name': req.sessionStorage.getItem('name'), 
+              'email': req.sessionStorage.getItem('email')
             }]
           }        
         }).then(result => {
           console.log(result)
-          res.json(data);
+          res.json(result);
         });
 
+        res.json(data)
     });
   },
 

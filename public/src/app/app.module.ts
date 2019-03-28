@@ -1,4 +1,10 @@
 import { BrowserModule } from '@angular/platform-browser';
+
+import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
+const config: SocketIoConfig = { 
+  url: 'http://localhost:3000', options: {}
+};
+
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http'
 import { FormsModule } from '@angular/forms'
@@ -15,6 +21,8 @@ import { JoinRaceComponent } from './join-race/join-race.component';
 import { HttpService } from './service/http.service';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { HeaderComponent } from './header/header.component';
+import { InfoServiceService } from './service/info-service.service';
+import { GameBoardTwoComponent } from './game-board-two/game-board-two.component';
 
 @NgModule({
   declarations: [
@@ -27,15 +35,17 @@ import { HeaderComponent } from './header/header.component';
     GameGroupComponent,
     JoinRaceComponent,
     PageNotFoundComponent,
-    HeaderComponent    
+    HeaderComponent,
+    GameBoardTwoComponent    
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    SocketIoModule.forRoot(config)
   ],
-  providers: [ HttpService ],
+  providers: [ HttpService, InfoServiceService ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

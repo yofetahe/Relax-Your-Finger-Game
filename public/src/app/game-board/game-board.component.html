@@ -4,9 +4,21 @@
     <span>Game Board</span>
 </div>
 
+<hr>
+
 <div class="game-board-header">
   <div class="group-name"> <b>Game</b>: {{game[0].name}}</div>
-  <div class="game-button"> <button class="waves-effect waves-light btn" (click)="start_playing()">Start</button> </div>
+  <div class="group-name"> <b>Group</b>: {{game_detail.name}} ({{game_detail.group_memeber.length}})</div>
+  <!-- <div class="game-button"> <button class="waves-effect waves-light btn" (click)="start_playing()">Start</button> </div> -->
+</div>
+
+<hr>
+
+<div class="players-list" *ngFor="let players of game_detail.group_memeber; let even = even; let odd = odd;">
+  <div [ngClass]="{'game-board-player-current': players.name == logged_user, 'game-board-player':players.name != logged_user}">{{players.name}}: </div>
+  <div [ngClass]="{'game-board-bar-container': even, 'game-board-bar-container-odd': odd}"> 
+    <div [ngClass]="{'game-board-bar': even, 'game-board-bar-odd': odd}" id="{{players.name}}"></div> 
+  </div>
 </div>
 
 <div class="game-board-screen">
@@ -17,15 +29,8 @@
   (keydown)="checkTypeValue($event)">
 </textarea>
 
-<div class="group-name"> <b>Group</b>: {{game_detail.name}} ({{game_detail.group_memeber.length}})</div>
 
-<div class="players-list" *ngFor="let players of game_detail.group_memeber">
-  <div class="game-board-player">{{players.name}}: </div>
-  <div class="game-board-bar-container"> 
-    <div class="game-board-bar" id="{{players.name}}">{{complition}}</div> 
-  </div>
-</div>
 
-<div style="padding-top: 20px;">
+<!-- <div style="padding-top: 20px;">
   <button class="waves-effect waves-light btn">Join the Race</button>
-</div>
+</div> -->

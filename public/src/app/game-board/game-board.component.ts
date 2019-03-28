@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { HttpService } from '../service/http.service';
 import { ActivatedRoute, Params } from '@angular/router';
+import { InfoServiceService } from '../service/info-service.service';
+import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-game-board',
@@ -28,8 +30,6 @@ export class GameBoardComponent implements OnInit {
     '~', '{', '}', ':', '"', '|', '\\', ';', ',', '.', '/', '?', '>', '<'
   ]
 
-  
-
   type_content = "Lorem Ipsum is simply dummy text of the printing and " +
                 "typesetting industry. Lorem Ipsum has been the industry's " +
                 "standard dummy text ever since the 1500s, when an unknown " +
@@ -43,6 +43,9 @@ export class GameBoardComponent implements OnInit {
 
 
   press_counter: number;
+  correct_counter: number;
+  correct_index: any = [];
+
   complition: string = "0%";
   game: any = [];
   game_detail: any;
@@ -50,14 +53,27 @@ export class GameBoardComponent implements OnInit {
   level_index: number;
   group_index: number;
   display_textbox: boolean;
+  updated_point: any = [];
+
+  logged_user: string;
+
+  getOthersStatusBar: Observable<string[]> ;
+  // private _statusBarSub: Subscription;
 
   constructor(
     private _http: HttpService,
-    private _route: ActivatedRoute
+    private _route: ActivatedRoute,
+    private _infoService: InfoServiceService
   ) { }
 
   ngOnInit() {
+    this.getOthersStatusBar = this._infoService.otherStatusBar;
+    // this._statusBarSub = this._infoService.otherStatusBar.subscribe()
+
     this.press_counter = 0;
+    this.correct_counter = 0;
+
+    this.logged_user = sessionStorage.getItem('name');
 
     if(sessionStorage.getItem('email')){
       this.display_textbox = true;
@@ -74,35 +90,54 @@ export class GameBoardComponent implements OnInit {
     })
   }
 
+  
+
   getAllLevelsGamesByGameId(id: string){
     this._http.getAllLevelsGamesByGameId(id)
       .subscribe(data => {
         this.game = data;
         this.game_detail = this.game[0]['level'][this.level_index]['created_group'][this.group_index];
-        console.log(this.game_detail)
+        
       });
   }
 
   checkTypeValue(event: any){
+
+    this.getOthersStatusBar.subscribe(data => {      
+      this.updated_point = data;
+    })
     
     if(event.key == "Backspace" && this.press_counter > 0){
+      if(Number(this.correct_index[this.correct_index.length-1]) == this.press_counter){
+        this.correct_index.pop();
+      }
       this.press_counter = this.press_counter - 1;
     } 
     if ( event.key != "Shift" && 
         (this.capital_character_list.includes(event.key) || 
-          this.small_character_list.includes(event.key)) ){     
+          this.small_character_list.includes(event.key) ||
+          this.special_character_list.includes(event.key) ||
+          this.number_character_list.includes(event.key)) ){     
       this.press_counter++;
     }
-    
-    var percent = (this.press_counter / this.type_content.length) * 100;
+    if(this.type_content[this.press_counter] == event.key){
+      this.correct_counter++;
+      this.correct_index.push(this.press_counter);
+    }
+
+    var percent = (this.correct_index.length / this.type_content.length) * 100;
     this.complition = (Math.round(percent * 100) / 100) + "%";
-
-    var logged_user = sessionStorage.getItem('name')
-
-    document.getElementById(logged_user).style.width = this.complition;
-
-    console.log(event.key, this.press_counter, this.type_content[this.press_counter])
+      
     
+    
+    // calling server socket.io
+    this._infoService.pushUpdateToServerStatusBar(this.logged_user, this.complition);
+    // console.log("From Server >>> ", this._infoService.getOthersStatusBarUpdate());
+
+    for(var i = 0; i < this.updated_point.length; i++){
+      document.getElementById(this.updated_point[i]['c_user']).style.width = this.updated_point[i]['points'];
+      document.getElementById(this.updated_point[i]['c_user']).innerHTML = this.updated_point[i]['points'];      
+    }
   }
 
 }

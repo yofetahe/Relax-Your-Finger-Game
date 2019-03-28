@@ -23,7 +23,6 @@ export class HttpService {
     return this._http.post('/api/my_game/login', data);
   }
   createGroupPerLevel(id: string, data: any){
-    console.log(data)
     return this._http.post(`/api/my_game/group/${id}`, data);
   }
   joinGroup(id: string, data: any, level_index: number, group_index: number){

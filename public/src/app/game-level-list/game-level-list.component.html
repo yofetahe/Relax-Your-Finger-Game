@@ -18,7 +18,7 @@
   <div class="group-container">
 
     <div class="game-group" *ngFor="let group of game_level.created_group; let group_index = index">
-      <img src="./../../assets/images/group-sign.png" alt="" (click)="getGameBoard(level_index, group_index)">
+      <img src="./../../assets/images/group-sign.png" alt="" (click)="getGameBoard(level_index, group_index, game[0]._id)">
       <h6>{{group.name}} ( {{game_level.created_group[group_index].group_memeber.length}} )</h6>
       <p>Competition Start: {{group.shedule_time}}</p>
       <a *ngIf="display_links" (click)="joinGroupForm(level_index, group_index)" style="cursor: pointer;">&gt; Join Group &lt;</a>

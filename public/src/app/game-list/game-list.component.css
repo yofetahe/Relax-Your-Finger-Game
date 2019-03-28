@@ -2,6 +2,7 @@
     display: inline-block;
     width: 20%;
     vertical-align: top;
+    padding: 10px;
 }
 .game-description{
     display: inline-block;

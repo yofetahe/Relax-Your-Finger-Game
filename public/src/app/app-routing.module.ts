@@ -6,6 +6,7 @@ import { GameListComponent } from './game-list/game-list.component';
 import { GameBoardComponent } from './game-board/game-board.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { GameLevelListComponent } from './game-level-list/game-level-list.component';
+import { GameBoardTwoComponent } from './game-board-two/game-board-two.component';
 
 const routes: Routes = [
   { path: '', component: GameListComponent },
@@ -14,6 +15,7 @@ const routes: Routes = [
   { path: 'game_list', component: GameListComponent },
   { path: 'game_level_list/:id', component: GameLevelListComponent },
   { path: 'game_board/:game_id/:level_index/:group_index', component: GameBoardComponent },
+  { path: 'game_board_2/:game_id/:level_index/:group_index', component: GameBoardTwoComponent },
   { path: '**', component: PageNotFoundComponent }
 ];
 

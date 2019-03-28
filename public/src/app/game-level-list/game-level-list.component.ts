@@ -60,8 +60,13 @@ export class GameLevelListComponent implements OnInit {
     })
   }
 
-  getGameBoard(level_index: number, group_index: number){    
-    this._router.navigate([`/game_board/${this.game_id}/${level_index}/${group_index}`])
+  getGameBoard(level_index: number, group_index: number, game_id: string){
+    
+    if(game_id == "5c9cdf0b1ce8f250b4df4792") {
+      this._router.navigate([`/game_board_2/${this.game_id}/${level_index}/${group_index}`])
+    } else if (game_id == "5c9ada9d70712d2414b76064") {
+      this._router.navigate([`/game_board/${this.game_id}/${level_index}/${group_index}`])
+    }
   }
 
 

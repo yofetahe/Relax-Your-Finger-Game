@@ -1,0 +1,59 @@
+<div>
+    / <a [routerLink]="['/game_list']">Back to Game List</a> / 
+    <a [routerLink]="['/game_level_list/', game[0]._id]">Back to Game Level List</a> /
+    <span>Game Board</span>
+</div>
+
+<hr>
+
+<div class="game-board-header">
+  <div class="group-name"> <b>Game</b>: {{game[0].name}}</div>
+  <div class="group-name"> <b>Group</b>: {{game_detail.name}} ({{game_detail.group_memeber.length}})</div>
+  <div class="game-button" *ngIf="start_btn"> <button class="waves-effect waves-light btn" (click)="start_playing()">Start</button> </div>
+</div>
+
+<hr>
+
+<div class="winner-flag">Time: <b> {{counter}} Seconds</b> &nbsp;&nbsp;&nbsp; Who is leading: {{winner}}</div>
+
+<div class="players-list" *ngFor="let players of game_detail.group_memeber; let even = even; let odd = odd">
+    <div *ngIf="even">    
+        <div class="game-board-player">{{players.name}} -&gt; </div>
+        <div class="game-board-bar-top">
+            <div style="text-align: center; width: 84%" id="_{{players.name}}">50%</div>
+            <div class="game-board-bar-container">
+                <div class="game-board-bar" id="{{players.name}}"></div>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="odd" style="text-align: right">    
+        <div class="game-board-bar-container-odd"> 
+           <div class="game-board-bar-odd" id="{{players.name}}"></div>
+           <div style="text-align: center" id="_{{players.name}}">50%</div> 
+        </div>
+        <div class="game-board-player" style="vertical-align: top;"> &lt;- {{players.name}} </div>
+    </div>
+</div>
+
+<div class="game-board-screen">
+  {{ type_content }}
+</div>
+
+<textarea cols="30" rows="150" spellcheck="false" *ngIf="display_textbox"
+  (keydown)="checkTypeValue($event)">
+</textarea>
+
+<div id="game-over" class="modal">
+
+    <!-- Modal content -->
+    <div class="modal-content">
+        <span (click)="closeGameOver()" class="close">&times;</span>
+        <h3 style="color: green"><i> GAME OVER!!! </i></h3>
+        <h4><i>The winner is : {{winner}}</i></h4> 
+    </div>
+  
+</div>
+
+<!-- <div style="padding-top: 20px;">
+  <button class="waves-effect waves-light btn">Join the Race</button>
+</div> -->
