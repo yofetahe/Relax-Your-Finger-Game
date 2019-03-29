@@ -1,4 +1,4 @@
-<nav>
+<!-- <nav>
   <div class="container">
     <div class="nav-wrapper">
       <a href="#" class="brand-logo">Relax <b>Your</b> Finger</a>
@@ -11,5 +11,18 @@
       </ul>
     </div>
   </div>
-</nav>
+</nav> -->
+<div class="side_bar">
+    <div>
+      <img src="../../assets/images/logo.png" alt="" srcset="">
+        <a href="#" class="brand-name">Relax <b>Your</b> Finger</a>
+        <ul>
+            <li *ngIf="inactive_user"><a [routerLink]="['/login']">Login</a></li>
+            <li *ngIf="inactive_user"><a [routerLink]="['/registration']">Register</a></li>
+            <li *ngIf="active_user"><a href="#">Login: {{current_user}}</a></li>
+            <li *ngIf="active_user"><a (click)="logout()">Logout</a></li>
+            <li> # People Online: {{connected_number}} </li>
+          </ul>
+    </div> 
+</div>
   

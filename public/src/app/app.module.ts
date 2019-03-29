@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 const config: SocketIoConfig = { 
-  url: 'http://localhost:3000', options: {}
+  url: 'http://192.168.1.150:3000', options: {}
 };
 
 import { NgModule } from '@angular/core';

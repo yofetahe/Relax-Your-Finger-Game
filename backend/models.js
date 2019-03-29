@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const crypto = require('crypto');
 
 require('./dbConnection')(mongoose);
 
@@ -48,16 +47,6 @@ const UserRegistrationSchema = new mongoose.Schema({
     password: {type: String, required: [true, "Password is required"]},
     scores: [ ScoreSchema ]
 }, {timestamps: true});
-
-// UserRegistrationSchema.methods.setPassword = (password) => {
-//     this.salt = crypto.randomBytes(16).toString('hex');
-//     this.hash = crypto.pbkdf2Sync(password, this.salt, 1000, 64, 'sha512').toString('hex');
-// }
-
-// UserRegistrationSchema.methods.validPassword = (password) => {
-//     var hash = crypto.pbkdf2Sync(password, this.salt, 1000, 64, 'sha512').toString('hex');
-//     return this.hash === hash;
-// }
 
 const Score = mongoose.model('Scores', ScoreSchema);
 const UserRegistration = mongoose.model('UserRegistration', UserRegistrationSchema);

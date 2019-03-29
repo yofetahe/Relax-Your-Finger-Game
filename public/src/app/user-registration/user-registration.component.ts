@@ -31,7 +31,8 @@ export class UserRegistrationComponent implements OnInit {
   }
 
   EMAIL_REGEXP  = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    
+
+  error: string;
 
   constructor(
     private _httpSevice: HttpService,
@@ -57,9 +58,13 @@ export class UserRegistrationComponent implements OnInit {
 
       this._httpSevice.addUser(this.user_reg)
         .subscribe((data) => {
-          // validation
-          // if(data)
-          this._router.navigate(['/game_list'])
+          if(data){
+            sessionStorage.setItem('name', data['name']);
+            sessionStorage.setItem('email', data['email']);        
+            this._router.navigate(['']);
+          } else {
+            this.error = "Sorry try again.";
+          }          
         })
     }
   }

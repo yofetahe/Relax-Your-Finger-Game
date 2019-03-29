@@ -19,15 +19,25 @@ app.use(session({
 require('./backend/routes')(app);
 
 const players = []
+var clients = 0;
 
 io.on("connection", socket => {
 
-  console.log("Socket connected");
+  clients++;
+  console.log("Socket connected", clients); 
+  socket.broadcast.emit("connected_user_number", clients);
+  socket.on('disconnect', ()=>{
+    clients--;
+    socket.emit("connected_user_number", clients);
+  }) 
 
   socket.on("pushStatusBarToServer", data => {    
     players.push(data);
-    socket.emit("getOthersStatusBar", players);
+    io.emit("getOthersStatusBar", players);
+    socket.broadcast.emit("getOthersStatusBar", players);
   });
 
-  io.emit("getOthersStatusBar", Object.keys(players))
+  // io.emit("getOthersStatusBar", Object.keys(players))
+  socket.broadcast.emit("getOthersStatusBar", Object.keys(players));
+  
 });

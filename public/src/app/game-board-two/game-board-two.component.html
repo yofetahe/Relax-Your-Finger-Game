@@ -1,3 +1,5 @@
+<app-header></app-header>
+
 <div>
     / <a [routerLink]="['/game_list']">Back to Game List</a> / 
     <a [routerLink]="['/game_level_list/', game[0]._id]">Back to Game Level List</a> /
@@ -18,7 +20,9 @@
 
 <div class="players-list" *ngFor="let players of game_detail.group_memeber; let even = even; let odd = odd">
     <div *ngIf="even">    
-        <div class="game-board-player">{{players.name}} -&gt; </div>
+        <div class="game-board-player">
+          <div class="player-info">{{players.name}} -&gt;</div> 
+        </div>
         <div class="game-board-bar-top">
             <div style="text-align: center; width: 84%" id="_{{players.name}}">50%</div>
             <div class="game-board-bar-container">
@@ -26,12 +30,15 @@
             </div>
         </div>
     </div>
-    <div *ngIf="odd" style="text-align: right">    
+    <div *ngIf="odd" style="text-align: right">
+        <div style="text-align: center; width: 100%" id="_{{players.name}}">50%</div>    
         <div class="game-board-bar-container-odd"> 
            <div class="game-board-bar-odd" id="{{players.name}}"></div>
-           <div style="text-align: center" id="_{{players.name}}">50%</div> 
+           <!-- <div style="text-align: center" id="_{{players.name}}">50%</div>  -->
         </div>
-        <div class="game-board-player" style="vertical-align: top;"> &lt;- {{players.name}} </div>
+        <div class="game-board-player" style="vertical-align: top;"> 
+          <div class="player-info">&lt;- {{players.name}} </div>
+        </div>
     </div>
 </div>
 
@@ -39,7 +46,11 @@
   {{ type_content }}
 </div>
 
-<textarea cols="30" rows="150" spellcheck="false" *ngIf="display_textbox"
+<div>
+  <h6 class="typingError" *ngFor="let error of error_char"> {{error['char']}}({{error['position']}}), </h6>
+</div>
+
+<textarea cols="30" rows="150" spellcheck="false" *ngIf="is_playing"
   (keydown)="checkTypeValue($event)">
 </textarea>
 

@@ -27,8 +27,7 @@ export class LoginComponent implements OnInit {
 
   login(){
     this._http.getUserByUsername(this.user)
-      .subscribe(data => {
-        console.log(data['name'])
+      .subscribe(data => {        
         if(data){
           sessionStorage.setItem('name', data['name']);
           sessionStorage.setItem('email', data['email']);        

@@ -1,3 +1,5 @@
+<app-header></app-header>
+
 <div>
     / <a [routerLink]="['/game_list']">Back to Game List</a> / 
     <a [routerLink]="['/game_level_list/', game[0]._id]">Back to Game Level List</a> /
@@ -25,7 +27,11 @@
   {{ type_content }}
 </div>
 
-<textarea cols="30" rows="150" spellcheck="false" *ngIf="display_textbox" 
+<div>
+  <h6 class="typingError" *ngFor="let error of error_char"> {{error['char']}}({{error['position']}}), </h6>
+</div>
+
+<textarea cols="30" rows="150" spellcheck="false" *ngIf="is_playing" 
   (keydown)="checkTypeValue($event)">
 </textarea>
 

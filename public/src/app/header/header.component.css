@@ -1,3 +1,29 @@
-.brand-logo{
-    padding-top: 5px;
+.side_bar{
+    position: fixed; 
+    left: 0px; 
+    top: 0; 
+    width: 250px; 
+    background-color: #ee6e73; 
+    height: 100% !important; 
+    text-align: center;
+
+    -webkit-box-shadow: 5px 0 5px -2px #888;
+          box-shadow: 5px 0 5px -2px #888;
+}
+
+.brand-name{
+    font-size: 30px;
+    color: white;
+    text-align: center;
+}
+
+ul li{
+    background-color: #f59094b8;
+    height: 50px;
+    padding: 15px 0px;
+    margin-top: 10px;
+    color: white;
+}
+ul li a{
+    cursor: pointer;
 }

@@ -54,8 +54,11 @@ export class GameBoardComponent implements OnInit {
   group_index: number;
   display_textbox: boolean;
   updated_point: any = [];
+  is_playing: boolean;
 
   logged_user: string;
+
+  error_char: any = [];
 
   getOthersStatusBar: Observable<string[]> ;
   // private _statusBarSub: Subscription;
@@ -74,30 +77,33 @@ export class GameBoardComponent implements OnInit {
     this.correct_counter = 0;
 
     this.logged_user = sessionStorage.getItem('name');
+    this.is_playing = false;
 
-    if(sessionStorage.getItem('email')){
-      this.display_textbox = true;
-    } else {
-      this.display_textbox = false;
-    }  
+    // if(sessionStorage.getItem('email')){
+    //   this.display_textbox = true;
+    // } else {
+    //   this.display_textbox = false;
+    // }  
 
     this._route.params.subscribe((params: Params) => {
       this.game_id = params['game_id'];
       this.level_index = params['level_index'];
       this.group_index = params['group_index'];
       this.getAllLevelsGamesByGameId(params['game_id']);
-
     })
   }
-
-  
 
   getAllLevelsGamesByGameId(id: string){
     this._http.getAllLevelsGamesByGameId(id)
       .subscribe(data => {
         this.game = data;
         this.game_detail = this.game[0]['level'][this.level_index]['created_group'][this.group_index];
-        
+        for(var i = 0; i < this.game_detail['group_memeber'].length; i++){
+          if(this.game_detail['group_memeber'][i]['name']==sessionStorage.getItem('name')){
+            this.is_playing = true;
+            break;
+          }
+        }  
       });
   }
 
@@ -108,32 +114,45 @@ export class GameBoardComponent implements OnInit {
     })
     
     if(event.key == "Backspace" && this.press_counter > 0){
-      if(Number(this.correct_index[this.correct_index.length-1]) == this.press_counter){
+
+      this.press_counter = this.press_counter - 1;
+
+      if(Number(this.correct_index[this.correct_index.length-1]) == (this.press_counter)){
         this.correct_index.pop();
       }
-      this.press_counter = this.press_counter - 1;
+      
+      if(this.error_char.length > 0){
+        if(this.error_char[this.error_char.length-1]['char'] == this.type_content[this.press_counter]){
+          this.error_char.pop();
+        } 
+      }
     } 
+    
     if ( event.key != "Shift" && 
-        (this.capital_character_list.includes(event.key) || 
+        (event.key == " " ||
+          this.capital_character_list.includes(event.key) || 
           this.small_character_list.includes(event.key) ||
           this.special_character_list.includes(event.key) ||
-          this.number_character_list.includes(event.key)) ){     
+          this.number_character_list.includes(event.key)) ){
+            
+            if(this.type_content[this.press_counter] == event.key){
+              this.correct_counter++;
+              this.correct_index.push(this.press_counter);
+            } else {
+                this.error_char.push({
+                  'char': this.type_content[this.press_counter],
+                  'position': this.press_counter
+                });
+            }
       this.press_counter++;
     }
-    if(this.type_content[this.press_counter] == event.key){
-      this.correct_counter++;
-      this.correct_index.push(this.press_counter);
-    }
-
+    
     var percent = (this.correct_index.length / this.type_content.length) * 100;
     this.complition = (Math.round(percent * 100) / 100) + "%";
-      
     
-    
-    // calling server socket.io
+    // calling server socket.io - to push current status to other connected
     this._infoService.pushUpdateToServerStatusBar(this.logged_user, this.complition);
-    // console.log("From Server >>> ", this._infoService.getOthersStatusBarUpdate());
-
+    
     for(var i = 0; i < this.updated_point.length; i++){
       document.getElementById(this.updated_point[i]['c_user']).style.width = this.updated_point[i]['points'];
       document.getElementById(this.updated_point[i]['c_user']).innerHTML = this.updated_point[i]['points'];      

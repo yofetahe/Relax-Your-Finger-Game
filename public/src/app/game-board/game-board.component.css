@@ -74,3 +74,16 @@ span{
     color: white;
     text-align: right;
 }
+
+
+.typingError{
+    color: red;
+    display: inline-block;
+    font-style: italic;
+    animation: blinker 1s linear infinite;
+}
+@keyframes blinker {
+    50% {
+      opacity: 0;
+    }
+    }

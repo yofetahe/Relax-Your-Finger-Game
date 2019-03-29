@@ -1,4 +1,5 @@
 const { Score, UserRegistration, Game } = require('./models');
+const bcrypt = require('bcrypt')
 
 module.exports = {
 
@@ -15,20 +16,36 @@ module.exports = {
       .catch(err => res.json(err))
   },
 
-  addUser: (req, res) => {
+  addUser: (req, res) => {    
     const DATA = req.body;
-    console.log(DATA)
-    // this.DATA.password = UserRegistration.setPassword(this.DATA.password);
-    UserRegistration.create(DATA)
-      .then(data => console.log(">>>> ", data) || res.json(data))
-      .catch(err => console.log(err) || res.json(err));
+    bcrypt.hash(DATA.password, 10, (err, hash) => {      
+      if(hash){
+        DATA.password = hash;        
+        UserRegistration.create(DATA)
+        .then(data => {
+          res.json(data)          
+        })
+        .catch(err => res.json(err));
+      } else {
+        res.json("");
+      }
+    })
   },
 
   getUserByUsername: (req, res) => {
     const DATA = req.body;    
-    UserRegistration.findOne({ email: DATA.email, password: DATA.password })
-      .then(data => {
-        res.json(data);
+    UserRegistration.findOne({ email: DATA.email })
+      .then(data => {        
+        if(data){
+          bcrypt.compare(DATA.password, data['password'], (err, result) => {
+            console.log(result);
+            if(result){
+              res.json(data);
+            } else {
+              res.json("");
+            }
+          })
+        }
       })
       .catch(err => res.json(err));
   },
@@ -76,17 +93,17 @@ module.exports = {
         }           
       }).then(data => {        
         
-        Game.updateOne({_id: ID}, 
-          {$push: 
-            {'level.0.created_group.0.group_memeber': [{
-              'name': req.sessionStorage.getItem('name'), 
-              'email': req.sessionStorage.getItem('email')
-            }]
-          }        
-        }).then(result => {
-          console.log(result)
-          res.json(result);
-        });
+        // Game.updateOne({_id: ID}, 
+        //   {$push: 
+        //     {'level.0.created_group.0.group_memeber': [{
+        //       'name': req.sessionStorage.getItem('name'), 
+        //       'email': req.sessionStorage.getItem('email')
+        //     }]
+        //   }        
+        // }).then(result => {
+        //   console.log(result)
+        //   res.json(result);
+        // });
 
         res.json(data)
     });
@@ -110,8 +127,4 @@ module.exports = {
     });
 
   }
-
-
-
-
 }

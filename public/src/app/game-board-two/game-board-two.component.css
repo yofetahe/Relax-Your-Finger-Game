@@ -38,6 +38,7 @@ span{
     height: 20px;
     width: 82%;
     border: 1px solid green;
+    background-color: white;
 }
 .game-board-bar-top{
     display: inline-block;
@@ -75,6 +76,27 @@ span{
 }
 
 
+.result-div{
+    display: inline-block;
+    width: 50%;
+}
+.class-info{
+    display: inline-block;
+    width: 50%;
+}
+
+
+.typingError{
+    color: red;
+    display: inline-block;
+    font-style: italic;
+    animation: blinker 1s linear infinite;
+}
+@keyframes blinker {
+    50% {
+      opacity: 0;
+    }
+  }
 
 
 
