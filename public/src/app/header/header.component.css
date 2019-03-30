@@ -2,11 +2,11 @@
     position: fixed; 
     left: 0px; 
     top: 0; 
-    width: 250px; 
-    background-color: #ee6e73; 
+    width: 255px;     
+    background-image: url('./../../assets/images/side_bar.jpg');
+    background-size: cover;
     height: 100% !important; 
     text-align: center;
-
     -webkit-box-shadow: 5px 0 5px -2px #888;
           box-shadow: 5px 0 5px -2px #888;
 }
@@ -18,7 +18,7 @@
 }
 
 ul li{
-    background-color: #f59094b8;
+    background-color: rgba(183, 195, 255, 0.2);
     height: 50px;
     padding: 15px 0px;
     margin-top: 10px;
@@ -26,4 +26,9 @@ ul li{
 }
 ul li a{
     cursor: pointer;
+}
+
+footer-conent{
+    position:absolute;
+    bottom:0;
 }

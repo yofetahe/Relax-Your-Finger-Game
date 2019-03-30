@@ -27,7 +27,7 @@ export class GameBoardComponent implements OnInit {
 
   special_character_list = [
     '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '-', '+', '=', '`',
-    '~', '{', '}', ':', '"', '|', '\\', ';', ',', '.', '/', '?', '>', '<'
+    '~', '{', '}', ':', '"', '|', '\\', ';', ',', '.', '/', '?', '>', '<', '\''
   ]
 
   type_content = "Lorem Ipsum is simply dummy text of the printing and " +
@@ -51,12 +51,11 @@ export class GameBoardComponent implements OnInit {
   game_detail: any;
   game_id: string;
   level_index: number;
-  group_index: number;
-  display_textbox: boolean;
+  group_index: number;  
   updated_point: any = [];
   is_playing: boolean;
-
   logged_user: string;
+  time_counter: any;
 
   error_char: any = [];
 
@@ -75,21 +74,24 @@ export class GameBoardComponent implements OnInit {
 
     this.press_counter = 0;
     this.correct_counter = 0;
+    this.time_counter = 0;
 
     this.logged_user = sessionStorage.getItem('name');
     this.is_playing = false;
-
-    // if(sessionStorage.getItem('email')){
-    //   this.display_textbox = true;
-    // } else {
-    //   this.display_textbox = false;
-    // }  
 
     this._route.params.subscribe((params: Params) => {
       this.game_id = params['game_id'];
       this.level_index = params['level_index'];
       this.group_index = params['group_index'];
       this.getAllLevelsGamesByGameId(params['game_id']);
+    })
+
+    this.getOthersStatusBar.subscribe(data => {      
+      this.updated_point = data;
+      for(var i = 0; i < this.updated_point.length; i++){
+        document.getElementById(this.updated_point[i]['c_user']).style.width = this.updated_point[i]['points'];
+        document.getElementById('_'+this.updated_point[i]['c_user']).innerHTML = this.updated_point[i]['points'];      
+      }
     })
   }
 
@@ -109,9 +111,9 @@ export class GameBoardComponent implements OnInit {
 
   checkTypeValue(event: any){
 
-    this.getOthersStatusBar.subscribe(data => {      
-      this.updated_point = data;
-    })
+    if(this.time_counter == 0){
+      this.start_time_counter();
+    }
     
     if(event.key == "Backspace" && this.press_counter > 0){
 
@@ -128,8 +130,7 @@ export class GameBoardComponent implements OnInit {
       }
     } 
     
-    if ( event.key != "Shift" && 
-        (event.key == " " ||
+    if ( event.key != "Shift" && (event.key == " " ||
           this.capital_character_list.includes(event.key) || 
           this.small_character_list.includes(event.key) ||
           this.special_character_list.includes(event.key) ||
@@ -147,16 +148,41 @@ export class GameBoardComponent implements OnInit {
       this.press_counter++;
     }
     
-    var percent = (this.correct_index.length / this.type_content.length) * 100;
+    var percent = ((this.correct_index.length / this.type_content.length) * 100)+5;
     this.complition = (Math.round(percent * 100) / 100) + "%";
+
+    if(percent > 100){
+      this.stop_time_counter();
+    }
+    
+    if(percent > 98){
+      document.getElementById('__'+sessionStorage.getItem('name')).classList.add('winnerStatusBar');
+    }
     
     // calling server socket.io - to push current status to other connected
     this._infoService.pushUpdateToServerStatusBar(this.logged_user, this.complition);
     
-    for(var i = 0; i < this.updated_point.length; i++){
-      document.getElementById(this.updated_point[i]['c_user']).style.width = this.updated_point[i]['points'];
-      document.getElementById(this.updated_point[i]['c_user']).innerHTML = this.updated_point[i]['points'];      
-    }
   }
+
+  interval: any;
+  start_time_counter(){
+    this.interval = setInterval(() => {
+      this.time_counter++;      
+    }, 1000);
+  }
+
+  stop_time_counter(){
+    console.log("stopped");
+    clearInterval(this.interval);
+  }
+
+  // start_time_counting(max: number){
+  //   var interval = setInterval(() => {
+  //     this.time_counter++;
+  //     if(this.time_counter > max){    
+  //       clearInterval(interval);        
+  //     };
+  //   }, 1000);
+  // }
 
 }

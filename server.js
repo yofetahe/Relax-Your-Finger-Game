@@ -23,8 +23,10 @@ var clients = 0;
 
 io.on("connection", socket => {
 
-  clients++;
-  console.log("Socket connected", clients); 
+  var clientIpAddress= socket.request.socket.remoteAddress;
+  // console.log(clientIpAddress)
+
+  clients++;  
   socket.broadcast.emit("connected_user_number", clients);
   socket.on('disconnect', ()=>{
     clients--;

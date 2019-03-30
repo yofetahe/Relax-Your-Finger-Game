@@ -2,13 +2,14 @@ span{
     color: silver;
 }
 .game-board-screen{
-    background-color: slategrey;
+    background-image: url('./../../assets/images/briks_background.jpeg');
+    background-size: cover;    
     min-height: 160px;
     width: 100%;
-    margin-bottom: 10px;
-    color: white;
+    margin-bottom: 10px;    
     font-size: 16px;
-    padding: 20px;    
+    font-weight: bold;
+    padding: 20px 90px;    
     margin-top: 20px;
 }
 
@@ -17,11 +18,11 @@ span{
 }
 .group-name{    
     display: inline-block;
-    width: 40%;
+    width: 20%;
 }
 .game-button{
     display: inline-block;
-    width: 59%;
+    width: 20%;
     text-align: right;
 }
 
@@ -30,7 +31,7 @@ span{
 }
 .game-board-player{
     display: inline-block;
-    width: 15%;
+    width: 10%;
     font-size: 18px;
     font-style: italic;
 }
@@ -38,44 +39,62 @@ span{
     color: red;
     font-weight: bold;
     display: inline-block;
-    width: 15%;
+    width: 10%;
+    font-style: italic;
+}
+
+.time-counter-info{
+    text-align: center;
+    background-color: rgb(241, 240, 240);
+    margin-top: 20px;
+    height: 50px;
+    padding-top: 15px;
 }
 
 
 
 .game-board-bar-container{
     display: inline-block;
-    height: 20px;
+    height: 38px;
     width: 84%;
-    border: 1px solid green;
+    border-bottom: 1px solid green;
 }
 
 .game-board-bar{
-    background-color: green;
+    /* background-color: green; */
     width: 0%;
-    height: 18px;
+    height: 40px;
     color: white;
     text-align: right;
 }
-
+.player{
+    display: inline-block;
+    right: 500px;
+}
 
 
 
 .game-board-bar-container-odd{
     display: inline-block;
-    height: 20px;
+    height: 38px;
     width: 84%;
-    border: 1px solid red;
+    border-bottom: 1px solid red;
 }
 .game-board-bar-odd{
-    background-color: red;
-    width: 0%;
+    /* background-color: red; */
+    width: 5%;
     height: 18px;
     color: white;
     text-align: right;
 }
 
 
+.winnerStatusBar{
+    color: green;
+    display: inline-block;
+    font-style: italic;
+    animation: blinker 1s linear infinite;
+}
 .typingError{
     color: red;
     display: inline-block;
@@ -86,4 +105,4 @@ span{
     50% {
       opacity: 0;
     }
-    }
+}

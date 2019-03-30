@@ -1,10 +1,10 @@
 .tab-container{
-    border-bottom: 1px green solid;
+    border-bottom: 1px #00a1f1 solid;
     margin-top: 10px;
 }
 .tab-button{
     display: inline-block;
-    background-color: green;
+    background-color: #00a1f1;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
     width: 140px;
@@ -25,7 +25,7 @@
     height: 40px;
     padding-top: 10px;
     text-align: center;
-    color: green;
+    color: #00a1f1;
     font-weight: bold;
     font-style: italic;
     margin-left: 10px;

@@ -197,12 +197,13 @@ getOthersStatusBar: Observable<string[]>;
     this.start_btn = false;
     this.start_game = true;
     var interval = setInterval(() => {
-      console.log(this.counter);
+
+      // this._infoService.startTimerToTheGame();
+
       this.counter--;
       if(this.counter < 0 ){
         this.gameOver();
-        clearInterval(interval);
-        console.log('Ding!');
+        clearInterval(interval);        
       };
     }, 1000);
   }

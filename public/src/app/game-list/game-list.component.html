@@ -1,27 +1,36 @@
 <app-header></app-header>
 
-<div *ngFor="let game of games; let even = even; let odd = odd">
-  <div class="game-logo"> 
+<div class="row" >
 
-    <img *ngIf="even" (click)="getGameLevelList(game._id)" 
-      src="./../../assets/images/typing-game.png" 
-      alt="Typeing Game" style="width: 150px; height: auto;">
-
-    <img *ngIf="odd" (click)="getGameLevelList(game._id)" 
-      src="./../../assets/images/finger_sup.jpg" 
-      alt="Typeing Game" style="width: 150px; height: auto;">
+    <div class="col s3" *ngFor="let game of games; let even = even; let odd = odd">
+        <div class="card">
+            <div class="card-image waves-effect waves-block waves-light">
+              <img class="activator" *ngIf="even" src="./../../assets/images/typing-game.png" 
+                alt="Typeing Game">          
+              <img class="activator" *ngIf="odd" src="./../../assets/images/finger_sup.jpg" 
+                alt="Typeing Game">
+            </div>
+            <div class="card-content">
+              <span class="card-title activator grey-text text-darken-4">
+                {{game.name}}
+                <i class="material-icons right">more_vert</i>
+              </span>
+              <p>
+                <a (click)="getGameLevelList(game._id)" style="cursor: pointer;">
+                  PLAY
+                </a> &nbsp; | &nbsp; 
+                <a (click)="getGameLevelList(game._id)" style="cursor: pointer;">
+                  COMPITE
+                </a></p>
+            </div>
+            <div class="card-reveal">
+              <span class="card-title grey-text text-darken-4">
+                {{game.name}}
+                <i class="material-icons right">close</i>
+              </span>
+              <p>{{game.description}}</p>
+            </div>
+          </div>        
+    </div>    
 
   </div>
-  <div class="game-description">
-      <h4> {{game.name}} {{i}} </h4>
-      <p> {{game.description}} </p>
-  </div>
-  <div class="game-scores">
-    <!-- <h4> Top 3 Scorers </h4>
-    <ol>
-      <li>MEAN Stack ( 5 minitus )</li>
-      <li>MEAN Stack ( 4 minitus )</li>
-      <li>MEAN Stack ( 3 minitus )</li>
-    </ol>     -->
-  </div>
-</div>

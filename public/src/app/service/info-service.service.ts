@@ -25,5 +25,9 @@ export class InfoServiceService {
     }
     this._socket.emit('pushStatusBarToServer', data);
   }
+
+  startTimerToTheGame(){
+    this._socket.emit('startTimerToTheGame')
+  }
   
 }
